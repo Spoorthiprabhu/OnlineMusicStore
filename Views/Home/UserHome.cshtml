@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "User Home";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Success"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    TempData["Success"] = null;
+}
+
+<div class="user-home text-white py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-4 font-weight-bold">🎉 Welcome, <span class="text-warning">@ViewBag.Username</span>!</h2>
+        <p class="lead text-light">This is your dashboard in the <strong>Online Music Store</strong> 🎧</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-4">
+            <a href="/Music/Categories" class="card-link">
+                <div class="card action-card bg-gradient-music text-white text-center h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">🎧 Browse Music</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-4">
+            <a href="/Music/Cart" class="card-link">
+                <div class="card action-card bg-gradient-cart text-white text-center h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">🛒 View Cart</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-4">
+            <a href="/WishList/ViewWishList" class="card-link">
+                <div class="card action-card bg-gradient-wishlist text-white text-center h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">❤️ Wishlist</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-4">
+            <a href="/Account/Logout" class="card-link">
+                <div class="card action-card bg-gradient-logout text-white text-center h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">🚪 Logout</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .user-home {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        border-radius: 20px;
+    }
+
+    .card-link {
+        text-decoration: none;
+    }
+
+    .action-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        padding: 1.5rem;
+    }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+    .bg-gradient-music {
+        background: linear-gradient(135deg, #6f42c1, #20c997);
+    }
+
+    .bg-gradient-cart {
+        background: linear-gradient(135deg, #007bff, #17a2b8);
+    }
+
+    .bg-gradient-wishlist {
+        background: linear-gradient(135deg, #e83e8c, #fd7e14);
+    }
+
+    .bg-gradient-logout {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+    }
+</style>

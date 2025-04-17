@@ -1,0 +1,52 @@
+# Ignore build output
+bin/
+obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio folders
+.vs/
+
+# ASP.NET specific
+*.dbmdl
+*.bak
+*.log
+
+# IIS Express settings
+.vs/
+*.vspscc
+*.vssscc
+*.vspcc
+*.vsmdi
+*.psess
+
+# Packages folder - NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Logs
+*.log
+
+# SQL Server
+*.mdf
+*.ldf
+
+# Resharper and Rider
+*.DotSettings.user
+.idea/
+*.sln.iml
+
+# Publish files
+*.Publish.xml
+*.pubxml
+*.publishproj
+
+# Other files
+*.tmp
+*.temp

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.CartItem>
+
+@{
+    ViewBag.Title = "Your Cart";
+    decimal total = 0;
+}
+
+<style>
+    .cart-container {
+        max-width: 1000px;
+        margin: 40px auto;
+    }
+
+    .cart-table th,
+    .cart-table td {
+        vertical-align: middle;
+    }
+
+    .cart-table tfoot td {
+        font-size: 1.1rem;
+        background-color: #f8f9fa;
+    }
+
+    .empty-cart {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 1.2rem;
+        color: #777;
+    }
+
+    .action-buttons .btn + .btn {
+        margin-left: 8px;
+    }
+</style>
+
+<div class="cart-container">
+    <div class="card shadow p-4">
+        <h2 class="mb-4 text-primary">🛒 Your Cart</h2>
+
+        @if (!Model.Any())
+        {
+            <div class="empty-cart">
+                <p>Your cart is empty.</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered cart-table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var itemTotal = item.Quantity * item.MusicItem.Price;
+                        total += itemTotal;
+                        <tr>
+                            <td>@item.MusicItem.Title</td>
+                            <td>@item.MusicItem.Artist</td>
+                            <td><strong>₹@item.MusicItem.Price</strong></td>
+                            <td>@item.Quantity</td>
+                            <td><strong>₹@itemTotal</strong></td>
+                            <td class="action-buttons">
+                                <a href="@Url.Action("RemoveFromCart", "Music", new { id = item.CartItemId })"
+                                   class="btn btn-danger btn-sm">
+                                    🗑 Remove
+                                </a>
+                                <a href="@Url.Action("BuyNow", "Music", new { id = item.CartItemId })"
+                                   class="btn btn-primary btn-sm">
+                                    💳 Buy Now
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-right font-weight-bold">Total:</td>
+                        <td colspan="2" class="font-weight-bold text-success">₹@total</td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    </div>
+</div>

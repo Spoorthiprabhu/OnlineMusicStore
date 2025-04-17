@@ -1,0 +1,71 @@
+﻿@model OnlineMusicStore.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        background-color: #ffffff; /* Ensures good contrast */
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333333; /* Darker heading text */
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #212529; /* Bootstrap standard label color */
+        margin-top: 10px;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+    }
+
+    .btn-login {
+        border-radius: 2rem;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+    }
+</style>
+
+<div class="login-container">
+    <div class="card p-4">
+        <h2 class="card-title text-center mb-4">🔐 Login</h2>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-danger text-center">@ViewBag.Message</div>
+        }
+
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Enter username" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter password" })
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success btn-login">Login</button>
+            </div>
+        }
+    </div>
+</div>

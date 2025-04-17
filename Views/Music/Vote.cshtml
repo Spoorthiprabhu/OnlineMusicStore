@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.MusicItem>
+
+@{
+    ViewBag.Title = "Vote for Your Favorite Song";
+}
+
+<div class="container mt-5">
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+            <div class="toast show" role="alert" style="background-color: #198754; color: #fff; border-radius: 0.5rem; min-width: 250px;">
+                <div class="d-flex">
+                    <div class="toast-body fw-bold">
+                        @TempData["Success"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <div class="text-center mb-4">
+        <h2 class="display-5 fw-bold text-primary">🗳️ Vote for Your Favorite Song</h2>
+        <p class="lead text-muted">Let your voice be heard! Cast your vote below.</p>
+    </div>
+
+    <div class="card shadow-sm p-4 rounded-4">
+        <table class="table table-hover table-bordered align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">🎵 Title</th>
+                    <th class="text-center">🎤 Artist</th>
+                    <th class="text-center">✅ Vote</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@item.Title</td>
+                        <td class="text-center">@item.Artist</td>
+                        <td class="text-center">
+                            <form action="@Url.Action("SubmitVote", "Music")" method="post">
+                                <input type="hidden" name="musicItemId" value="@item.MusicItemId" />
+                                <button type="submit" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                                    👍 Vote
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const toastEl = document.querySelector('.toast');
+                        if (toastEl) {
+                            const toast = new bootstrap.Toast(toastEl);
+                            toast.show();
+                        }
+                    });
+                </script>
+
+            </tbody>
+        </table>
+    </div>
+</div>

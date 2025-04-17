@@ -1,0 +1,83 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.MusicItem>
+
+@{
+    ViewBag.Title = "Music in " + ViewBag.CategoryName;
+    var isAdmin = Session["Role"] != null && Session["Role"].ToString() == "Admin";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="display-6 fw-bold text-primary">@ViewBag.Title</h2>
+        <p class="lead text-muted">Enjoy the finest @ViewBag.CategoryName tracks 🎵</p>
+    </div>
+
+    <div class="card shadow-sm p-4 rounded-4">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>🎵 Title</th>
+                    <th>🎤 Artist</th>
+                    <th>📅 Release Date</th>
+                    <th>💰 Price</th>
+                    <th>▶️ Play</th>
+                    @if (!isAdmin)
+                    {
+                        <th>🛒 Action</th>
+                        <th>❤️ Wishlist</th>
+                    }
+                    @if (isAdmin)
+                    {
+                        <th>✏️ Edit</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Artist</td>
+                        <td>@item.ReleaseDate.ToShortDateString()</td>
+                        <td>₹@item.Price</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.SongURL))
+                            {
+                                <a href="@item.SongURL" target="_blank" class="btn btn-sm btn-primary">
+                                    ▶️ Play on Spotify
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Preview</span>
+                            }
+                        </td>
+                        @if (!isAdmin)
+                        {
+                            <td>
+                                <a href="@Url.Action("AddToCart", "Music", new { id = item.MusicItemId })"
+                                   class="btn btn-sm btn-success">
+                                    Add to Cart
+                                </a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("AddToWishList", "WishList", new { id = item.MusicItemId })"
+                                   class="btn btn-sm btn-outline-danger">
+                                    ❤️ Add to Wishlist
+                                </a>
+                            </td>
+                        }
+                        @if (isAdmin)
+                        {
+                            <td>
+                                <a href="@Url.Action("EditSong", "Admin", new { id = item.MusicItemId })"
+                                   class="btn btn-sm btn-warning">
+                                    ✏️ Edit
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

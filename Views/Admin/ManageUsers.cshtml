@@ -1,0 +1,68 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.User>
+
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<style>
+    .manage-users-container {
+        max-width: 1000px;
+        margin: 40px auto;
+    }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    table th, table td {
+        vertical-align: middle !important;
+    }
+
+    .btn-delete {
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+</style>
+
+<div class="manage-users-container">
+    <div class="card p-4">
+        <h2 class="card-title text-center mb-4" style="color: #212529;">👥 User Management</h2>
+
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserId</td>
+                        <td>@user.Username</td>
+                        <td>@user.Email</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("DeleteUser", "Admin", new { id = user.UserId })"
+                               class="btn btn-danger btn-sm btn-delete"
+                               onclick="return confirm('Are you sure you want to delete this user?');">
+                                🗑️ Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

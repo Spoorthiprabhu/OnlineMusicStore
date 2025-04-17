@@ -1,0 +1,76 @@
+﻿@model OnlineMusicStore.Models.User
+
+@{
+    ViewBag.Title = "Register";
+}
+<style>
+    .register-container {
+        max-width: 500px;
+        margin: 50px auto;
+    }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff; /* Ensures good contrast */
+    }
+
+    .card-title {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #333333; /* Darker for better readability */
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #212529; /* Bootstrap's default label color */
+        margin-top: 10px;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+    }
+
+    .btn-register {
+        border-radius: 2rem;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+    }
+</style>
+
+
+<div class="register-container">
+    <div class="card p-4">
+        <h2 class="card-title text-center mb-4">📝 User Registration</h2>
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Choose a username" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Create a password" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email address" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Role)
+                @Html.DropDownListFor(m => m.Role, new SelectList(new[] { "User", "Admin" }), "Select Role", new { @class = "form-control" })
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-register">Register</button>
+            </div>
+        }
+    </div>
+</div>

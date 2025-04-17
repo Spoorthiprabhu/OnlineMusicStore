@@ -1,0 +1,44 @@
+﻿@model OnlineMusicStore.Models.MusicItem
+
+@{
+    ViewBag.Title = "Add Music";
+}
+
+<h2>Add New Music Item</h2>
+
+@using (Html.BeginForm("AddMusic", "Music", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Artist)
+        @Html.TextBoxFor(m => m.Artist, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Genre)
+        @Html.TextBoxFor(m => m.Genre, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ReleaseDate)
+        @Html.TextBoxFor(m => m.ReleaseDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price)
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Category")
+        @Html.DropDownList("CategoryId", null, "Select Category", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Upload Image")
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+    <div class="form-group">
+        @Html.Label("Song URL")
+        @Html.TextBoxFor(m => m.SongURL, new { @class = "form-control", placeholder = "https://..." })
+    </div>
+    <button type="submit" class="btn btn-primary">Add Music</button>
+}

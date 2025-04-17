@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Online Music Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e); /* dark pop gradient */
+            font-family: 'Segoe UI', sans-serif;
+            color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        header h1,
+        .welcome-message {
+            color: #ffffff;
+        }
+
+        .navbar-shadow {
+            background: #1db954; /* Spotify green */
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-sm {
+            transition: transform 0.2s ease-in-out;
+            border-radius: 20px;
+            color: #fff !important;
+            font-weight: 500;
+        }
+
+            .btn-sm:hover {
+                transform: scale(1.07);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            }
+
+        /* Pop-style buttons with vivid flat tones */
+        a[href*="UserHome"] {
+            background-color: #0d6efd !important;
+        }
+        /* Blue */
+        a[href*="Vote"] {
+            background-color: #20c997 !important;
+        }
+        /* Teal */
+        a[href*="ChartToppers"] {
+            background-color: #ffc107 !important;
+        }
+        /* Yellow */
+        a[href*="Categories"] {
+            background-color: #fd7e14 !important;
+        }
+        /* Orange */
+        a[href*="WishList"] {
+            background-color: #e83e8c !important;
+        }
+        /* Pink */
+        a[href*="Cart"] {
+            background-color: #6f42c1 !important;
+        }
+        /* Purple */
+        a[href*="Feedback/Submit"] {
+            background-color: #17a2b8 !important;
+        }
+        /* Cyan */
+
+        /* Admin buttons */
+        a[href*="AddMusic"] {
+            background-color: #6610f2 !important;
+        }
+
+        a[href*="ManageUsers"] {
+            background-color: #dc3545 !important;
+        }
+
+        a[href*="ViewFeedback"] {
+            background-color: #adb5bd !important;
+        }
+
+        a[href*="SalesReport"] {
+            background-color: #198754 !important;
+        }
+
+        .store-header {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1db954, #1ed760);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+            .store-header i {
+                margin-right: 12px;
+                color: #000000;
+            }
+
+            .store-header .highlight {
+                color: #000000;
+            }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            text-align: center;
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <header>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="store-header">
+                    <i class="fas fa-music"></i> <span>Online <span class="highlight">Music Store</span></span>
+                </h1>
+
+                <div>
+                    @if (Session["Username"] != null)
+                    {
+                        <span class="welcome-message">Welcome, @Session["Username"]!</span>
+                        <a href="/Account/Logout" class="btn btn-sm btn-outline-danger ml-2">Logout</a>
+                    }
+                    else
+                    {
+                        <a href="/Account/Login" class="btn btn-sm btn-outline-success ml-2">Login</a>
+                        <a href="/Account/Register" class="btn btn-sm btn-outline-info ml-2">Register</a>
+                    }
+                </div>
+            </div>
+
+            <div class="navbar-shadow p-3" style="background-color: #6f42c1; border-radius: 12px; ">
+
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="d-flex flex-wrap align-items-center" style="gap: 0.5rem;">
+                        @{
+                            var role = Session["Role"] != null ? Session["Role"].ToString() : "";
+                            var homeAction = role == "Admin" ? "AdminHome" : "UserHome";
+                        }
+
+                        <a href="@Url.Action(homeAction, "Home")" class="btn btn-sm" style="background-color:#cce5ff;">🏠 Home</a>
+                        <br />
+
+
+
+
+                        @if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
+                        {
+                            <a href="/Music/Vote" class="btn btn-sm" style="background-color:#d0f0c0;">🗳️ Vote</a>
+                        }
+
+                        @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
+                        {
+                            <a href="/Music/ChartToppers" class="btn btn-sm" style="background-color:#f0e68c;">📈 Chart Toppers</a>
+                        }
+
+                        @Html.ActionLink("🎧 Browse Music", "Categories", "Music", null, new { @class = "btn btn-sm", style = "background-color:#f8d7da;" })
+                        @if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
+                        {
+                            <a href="/WishList/ViewWishList" class="btn btn-sm" style="background-color:#ffe0e6;">❤️ Wishlist</a>
+                            <a href="/Music/Cart" class="btn btn-sm" style="background-color: #5a189a; ">🛒 Cart</a>
+                        }
+
+                        @if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
+                        {
+                            <a href="/Feedback/Submit" class="btn btn-sm" style="background-color:#d1ecf1;">💬 Feedback</a>
+                            <a href="@Url.Action("UserOrders", "Order")" class="btn btn-outline-light mx-2">📜 Orders Details</a>
+                            <br />
+
+
+                        }
+
+
+
+
+
+
+
+
+                        @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
+                        {
+                            <a href="/Music/AddMusic" class="btn btn-sm" style="background-color:#fff3cd;">⬆️ Upload</a>
+                            <a href="/Admin/ManageUsers" class="btn btn-sm" style="background-color:#f8d7da;">👤 Users</a>
+                            <a href="/Admin/ViewFeedback" class="btn btn-sm" style="background-color:#d6d8db;">📨 Feedbacks</a>
+                            <a href="/Admin/SalesReport" class="btn btn-sm" style="background-color:#d4edda;">📊 Reports</a>
+                            <a href="/Admin/AllOrders" class="btn btn-sm" style="background-color: #f8d7da;">
+                                📦 View All Orders
+                            </a>
+
+
+                        }
+
+                        <a href="@Url.Action("Help", "Home")" class="btn btn-sm" style="background-color:#6c757d;">❓ Help</a>
+                    </div>
+                    
+
+                    <form action="/Music/Search" method="get" class="form-inline mt-2 mt-md-0">
+                        <input type="text" name="query" class="form-control form-control-sm mr-2"
+                               style="min-width: 220px; border-radius: 20px;" placeholder="🔍 Search music..." />
+                        <br />
+                        <br />
+                        <button type="submit" class="btn btn-sm btn-dark" style="border-radius: 20px;">Search</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </header>
+
+        <main class="mt-4">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Success"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            @RenderBody()
+        </main>
+
+        <footer>
+            <hr />
+            &copy; @DateTime.Now.Year - Online Music Store 🎶 | All rights reserved.
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

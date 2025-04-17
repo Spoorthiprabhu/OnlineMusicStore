@@ -1,0 +1,98 @@
+﻿@model OnlineMusicStore.Models.MusicItem
+
+@{
+    ViewBag.Title = "Edit Song";
+}
+
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    @TempData["Success"]
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<style>
+    .edit-song-container {
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+
+    .form-group label {
+        font-weight: 500;
+    }
+
+    .btn-update {
+        border-radius: 2rem;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+    }
+</style>
+
+<div class="edit-song-container">
+    <div class="card p-4">
+        <h2 class="card-title text-center mb-4">✏️ Edit Song Details</h2>
+
+        @using (Html.BeginForm("EditSong", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.MusicItemId)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Song title" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Artist)
+                @Html.TextBoxFor(m => m.Artist, new { @class = "form-control", placeholder = "Artist name" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ReleaseDate)
+                @Html.TextBoxFor(m => m.ReleaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price in ₹" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SongURL)
+                @Html.TextBoxFor(m => m.SongURL, new { @class = "form-control", placeholder = "Spotify/Preview URL" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryId, "Category")
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories, "CategoryId", "CategoryName", Model.CategoryId), "Select Category", new { @class = "form-control" })
+            </div>
+
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-warning btn-update">Update Song</button>
+            </div>
+        }
+    </div>
+</div>
+

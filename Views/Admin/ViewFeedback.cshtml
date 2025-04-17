@@ -1,0 +1,73 @@
+﻿@model IEnumerable<OnlineMusicStore.Models.Feedback>
+
+@{
+    ViewBag.Title = "Customer Feedback";
+}
+
+<style>
+    .feedback-container {
+        max-width: 1000px;
+        margin: 40px auto;
+    }
+
+    .feedback-card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+    }
+
+    .feedback-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .no-feedback {
+        font-style: italic;
+        color: #888;
+        text-align: center;
+        margin-top: 2rem;
+    }
+</style>
+
+<div class="feedback-container">
+    <div class="feedback-card bg-white">
+        <h2 class="feedback-title text-center">💬 Customer Feedback</h2>
+
+        @if (!Model.Any())
+        {
+            <p class="no-feedback">No feedback submitted yet.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Message</th>
+                            <th>Submitted At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var feedback in Model)
+                        {
+                            <tr>
+                                <td>@feedback.User.Username</td>
+                                <td>@feedback.Message</td>
+                                <td>@feedback.SubmittedAt.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

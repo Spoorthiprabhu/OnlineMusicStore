@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Admin Home";
+}
+
+<div class="admin-dashboard text-white">
+    <h2 class="mb-4">Welcome Admin, <span class="text-warning">@ViewBag.Username</span>! 👋</h2>
+    <p class="lead mb-4">This is your Admin Dashboard 🛠️</p>
+
+    <div class="list-group">
+        <a href="/Music/AddMusic" class="list-group-item list-group-item-action bg-success text-white border-0 mb-2 rounded">
+            🎵 Add Music Item
+        </a>
+       
+        <a href="/Admin/SalesReport" class="list-group-item list-group-item-action bg-warning text-dark border-0 mb-2 rounded">
+            📊 View Reports
+        </a>
+        <a href="/Admin/ViewFeedback" class="list-group-item list-group-item-action bg-info text-white border-0 mb-2 rounded">
+            💬 View Feedback
+        </a>
+        <a href="/Account/Logout" class="list-group-item list-group-item-action bg-danger text-white border-0 mb-2 rounded">
+            🚪 Logout
+        </a>
+    </div>
+</div>
+
+<style>
+    .admin-dashboard {
+        padding: 2rem;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .list-group-item {
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    }
+
+        .list-group-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+</style>
