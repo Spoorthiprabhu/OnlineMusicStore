@@ -232,6 +232,10 @@ public class MusicController : Controller
 
     public ActionResult Vote()
     {
+        if (Session["UserId"] == null)
+            return RedirectToAction("Login", "Account");
+
+        int userId = Convert.ToInt32(Session["UserId"]);
         var musicList = db.MusicItems.ToList();
         return View(musicList);
     }
@@ -239,6 +243,7 @@ public class MusicController : Controller
     [HttpPost]
     public ActionResult Vote(int musicItemId)
     {
+       
         var vote = new Vote
         {
             MusicItemId = musicItemId,
